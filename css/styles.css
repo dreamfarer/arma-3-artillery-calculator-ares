@@ -89,6 +89,23 @@ img {
     z-index: 1000;
 }
 
+.buttonsInMap {
+    background-color: #e50027;
+    margin: 0.1vh;
+    min-height: 2vh;
+    width: 100%;
+    border: none;
+    color: white;
+    padding: 15px 15px 15px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 0.4vh;
+    z-index: 1000;
+}
+
 .button span {
     cursor: pointer;
     display: inline-block;
