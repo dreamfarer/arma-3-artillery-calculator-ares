@@ -1,0 +1,4 @@
+*.md
+auxiliary/
+js-inactive/
+Dockerfile
