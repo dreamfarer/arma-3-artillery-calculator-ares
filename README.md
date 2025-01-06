@@ -2,6 +2,19 @@
 ARES is a web service to calculate the elevation, heading, and fire mode needed to precisely hit desired targets in Bohemia Interactive's **Arma 3**. When loading the web app, you get to choose between the classic artillery computer for the **2S9 Sochor** and **M4 Scorcher**, or, you are finally able to opt for the _**redneck artillery**_ version designed for the **MAAWS Mk4 Mod 0** – _Be the real King of the Hill!_
 
 ### Get ARES
+
+#### Docker
+
+You need to have Docker or Podman installed and simply run: `docker run -p 8080:80 ghcr.io/Dreamfarer/arma-3-artillery-calculator:latest`. The interface will be accessible from `http://localhost:8080` or `http://your-server-ip:8080`
+
+Or you can build the container yourself:
+```bash
+docker build . -t ghcr.io/Dreamfarer/arma-3-artillery-calculator
+docker run -p 8080:80 ghcr.io/Dreamfarer/arma-3-artillery-calculator
+```
+
+#### Bare
+
 It is as simple as cloning this repository and double-clicking the `.html` file. However, there is yet a more convenient way: Head straight to the live version of this artillery calculator found [HERE](https://arma.openlink.bot/ares) – Free of charge and no nasty trackers nor advertisements!
 
 ### How to Use?
