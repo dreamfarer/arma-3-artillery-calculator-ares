@@ -1,23 +1,25 @@
-### About ARES
+## About ARES
 ARES is a web service to calculate the elevation, heading, and fire mode needed to precisely hit desired targets in Bohemia Interactive's **Arma 3**. When loading the web app, you get to choose between the classic artillery computer for the **2S9 Sochor** and **M4 Scorcher**, or, you are finally able to opt for the _**redneck artillery**_ version designed for the **MAAWS Mk4 Mod 0** – _Be the real King of the Hill!_
 
-### Get ARES
+## Get ARES
+#### Live Version
+Access the live version of the ARES artillery calculator directly [HERE](https://arma.openlink.bot/ares). It’s completely free to use, with no invasive trackers or annoying advertisements!
 
-#### Docker
-
-You need to have Docker or Podman installed and simply run: `docker run -p 8080:80 ghcr.io/Dreamfarer/arma-3-artillery-calculator:latest`. The interface will be accessible from `http://localhost:8080` or `http://your-server-ip:8080`
-
-Or you can build the container yourself:
+#### Using Docker
+To use ARES with Docker, ensure you have either [Docker](https://docs.docker.com/engine/install/) or [Podman](https://podman.io/docs/installation) installed. Once installed, you can run the following command to get started: 
 ```bash
-docker build . -t ghcr.io/Dreamfarer/arma-3-artillery-calculator
-docker run -p 8080:80 ghcr.io/Dreamfarer/arma-3-artillery-calculator
+docker run -p 8080:80 ghcr.io/dreamfarer/arma-3-artillery-calculator-ares:latest
 ```
 
-#### Bare
+Alternatively, if you prefer to build the container yourself, use the commands below:
+```bash
+docker build . -t ghcr.io/dreamfarer/arma-3-artillery-calculator-ares:latest
+docker run -p 8080:80 ghcr.io/dreamfarer/arma-3-artillery-calculator-ares:latest
+```
 
-It is as simple as cloning this repository and double-clicking the `.html` file. However, there is yet a more convenient way: Head straight to the live version of this artillery calculator found [HERE](https://arma.openlink.bot/ares) – Free of charge and no nasty trackers nor advertisements!
+Either way, the interface will be available at `http://localhost:8080` or `http://your-server-ip:8080`.
 
-### How to Use?
+## How to Use?
 When you open the web app, you'll be prompted to choose between two artillery calculators: one for the 2S9 Sochor and M4 Scorcher, and another for the MAAWS Mk4 Mod 0 (redneck artillery version).
 
 **Add an Artillery Unit**: Right-click on the map to place your artillery unit.\
@@ -28,24 +30,24 @@ When you open the web app, you'll be prompted to choose between two artillery ca
 For more guidance, check out the [tutorial](https://youtu.be/hKEvLDI5Cxo?si=XfqqDMszCjSBtvyU) video by [Testiboule](https://www.youtube.com/@Testiboule). Thanks, Testiboule! <3\
 *On mobile, a left-click is equivalent to a single tap, and a right-click is equivalent to a long press.*
 
-### What Extra Features Does ARES Have to Offer?
+## What Extra Features Does ARES Have to Offer?
 ARES has more to offer than what you notice at a first glance.
 
-**Altitude API**\
+#### Altitude API
 I have created an [API](https://api.openlink.bot/ares.php?x=10000&y=10000) to get the height data of a given coordinate on Altis. It's effortless to use: Transmit a 'x' and 'y' coordinate to the [API](https://api.openlink.bot/ares.php?x=10000&y=10000), and it will return the altitude above sea level in JSON format at this specified point.\
 Let's go for an example: If you would like to know the altitude at 10'000, 10'000 on Altis, make a call to the API like this: https://api.openlink.bot/ares.php?x=10000&y=10000
 
-**Download Map Data**\
+#### Download Map Data
 Unfortunately, the map tiles exceed the GitHub upload limit. You can get them [HERE](https://arma.openlink.bot/assets/map.zip). Unzip `map.zip` and drag-and-drop the map folder into the root project folder
 
-### The Magic Behind It
+## The Magic Behind It
 The following documentation is split in two sections. The first section deals with the flight path of artillery shells shot by self-propelled artillery like the 2S9 Sochor and M4 Scorcher. Fortunately, in Arma 3, artillery shells are the only projectiles [not](https://community.bistudio.com/wiki/CfgAmmo_Config_Reference#airFriction) affected by external force such as wind or air friction.\
 In the much more difficult second section, we will go over the projectile motion of the MAAWS Mk4 Mod 0 rocket, which, in contrast to artillery shells, is affected by air resistance, making the calculations much more exhausting.
 
-**Self-Propelled Artillery**\
+#### Self-Propelled Artillery
 Will be added on a later date. I know you want the juicy MAAWS rocket science. 🤣 
 
-**MAAWS Mk4 Mod 0 (Redneck Artillery)**\
+#### MAAWS Mk4 Mod 0 (Redneck Artillery)
 The [Arma 3 wiki](https://community.bistudio.com/wiki/Arma_3:_Damage_Description#Bullet/Shell) states that the only properties that influence trajectory are _initSpeed (CfgMagazines)_, _airFriction (CfgAmmo)_ and _coefGravity (CfgAmmo)_. Such projectiles travel based on their muzzle velocity _(initSpeed)_ and aerodynamic drag _(airFriction)_, along with gravity-induced vertical drop.
 
 Fortunately, there is another post on the [Arma 3 wiki](https://community.bistudio.com/wiki/Weapons_settings) giving us an insight into the formula used to calculate projectile motion with air resistance. However, it is badly written and formatted to the point of almost no recognition. After further inspection and some guesswork, I decoded the formula to be:
