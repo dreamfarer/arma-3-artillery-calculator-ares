@@ -16,7 +16,7 @@ function requestHeight(vec2D_Arma, vec2D_Leaflet, mode, indexOfSelectedMarker, i
 	};
 
 	//Variables to pass to server
-	var url = 'https://api.openlink.bot/ares.php?x=' + vec2D_Arma[0] + '&y=' + vec2D_Arma[1];
+	var url = 'https://api.whtvr.ch/ares.php?x=' + vec2D_Arma[0] + '&y=' + vec2D_Arma[1];
 	var method = 'GET';
 	var xhr = createCORSRequest(method, url);
 

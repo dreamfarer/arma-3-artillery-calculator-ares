@@ -3,7 +3,7 @@ ARES is a web service to calculate the elevation, heading, and fire mode needed 
 
 ## Get ARES
 #### Live Version
-Access the live version of the ARES artillery calculator directly [HERE](https://arma.openlink.bot/ares). It’s completely free to use, with no invasive trackers or annoying advertisements!
+Access the live version of the ARES artillery calculator directly [HERE](https://arma.whtvr.ch/ares). It’s completely free to use, with no invasive trackers or annoying advertisements!
 
 #### Using Docker
 To use ARES with Docker, ensure you have either [Docker](https://docs.docker.com/engine/install/) or [Podman](https://podman.io/docs/installation) installed. Once installed, you can run the following command to get started: 
@@ -34,8 +34,8 @@ For more guidance, check out the [tutorial](https://youtu.be/hKEvLDI5Cxo?si=Xfqq
 ARES has more to offer than what you notice at a first glance.
 
 #### Altitude API
-I have created an [API](https://api.openlink.bot/ares.php?x=10000&y=10000) to get the height data of a given coordinate on Altis. It's effortless to use: Transmit a 'x' and 'y' coordinate to the [API](https://api.openlink.bot/ares.php?x=10000&y=10000), and it will return the altitude above sea level in JSON format at this specified point.\
-Let's go for an example: If you would like to know the altitude at 10'000, 10'000 on Altis, make a call to the API like this: https://api.openlink.bot/ares.php?x=10000&y=10000
+I have created an [API](https://api.whtvr.ch/ares.php?x=10000&y=10000) to get the height data of a given coordinate on Altis. It's effortless to use: Transmit a 'x' and 'y' coordinate to the [API](https://api.whtvr.ch/ares.php?x=10000&y=10000), and it will return the altitude above sea level in JSON format at this specified point.\
+Let's go for an example: If you would like to know the altitude at 10'000, 10'000 on Altis, make a call to the API like this: https://api.whtvr.ch/ares.php?x=10000&y=10000
 
 #### Download Map Data
 Unfortunately, the map tiles exceed the GitHub upload limit. You can get them [HERE](https://github.com/Dreamfarer/ARMA-3-ARTILLERY-CALCULATOR-ARES/releases/download/tiles-altis-v1.0.0/tiles-altis.zip). Unzip `map.zip` and drag-and-drop the map folder into the root project folder
