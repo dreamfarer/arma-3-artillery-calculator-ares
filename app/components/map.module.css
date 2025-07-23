@@ -1,0 +1,72 @@
+.mapWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: var(--tile-background);
+}
+
+.map {
+  width: 100%;
+  height: 100%;
+}
+
+.overlay {
+  position: absolute;
+  z-index: 10;
+  inset: 0;
+  backdrop-filter: blur(5px);
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-dark);
+}
+
+.overlayContent {
+  width: 60%;
+  background: var(--background-dark);
+  padding: 1.5rem 2rem;
+  text-align: center;
+  max-width: 90%;
+}
+
+.overlayContent p {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.overlayContent button {
+  background-color: var(--theme);
+  color: var(--background-dark);
+  border: none;
+  padding: 0.4rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.overlayContent button:hover {
+  filter: brightness(85%);
+}
+
+.buttonGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.customMarker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.markerImage {
+  max-width: 32px;
+  max-height: 32px;
+  object-fit: contain;
+  display: block;
+}
