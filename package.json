@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
-    "build:compress": "ts-node --project tsconfig.scripts.json --transpile-only scripts/compress-csv.ts",
+    "build:encode": "ts-node --project tsconfig.scripts.json --transpile-only scripts/encode-csv.ts",
     "start": "next start",
     "lint": "next lint"
   },
