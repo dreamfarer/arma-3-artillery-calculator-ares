@@ -1,3 +1,6 @@
+> [!WARNING]  
+> The live version and the elevation API are inaccessible because the contract with my server provider ended on July 27, 2025. I am currently working on a replacement.
+
 ## About ARES
 ARES is a web service to calculate the elevation, heading, and fire mode needed to precisely hit desired targets in Bohemia Interactive's **Arma 3**. When loading the web app, you get to choose between the classic artillery computer for the **2S9 Sochor** and **M4 Scorcher**, or, you are finally able to opt for the _**redneck artillery**_ version designed for the **MAAWS Mk4 Mod 0** – _Be the real King of the Hill!_
 
