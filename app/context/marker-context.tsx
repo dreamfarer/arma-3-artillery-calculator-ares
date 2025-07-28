@@ -5,6 +5,7 @@ import { useMapContext } from './map-context';
 import { Map } from 'maplibre-gl';
 import { convertToUnit } from '@/lib/convert';
 import { loadIcon } from '@/lib/marker-utility';
+import { usePopupContext } from './popup-context';
 
 type Marker = {
   id: string;
@@ -23,6 +24,7 @@ const MarkerContext = createContext<TMarkerContext | null>(null);
 
 export function MarkerProvider({ children }: { children: React.ReactNode }) {
   const { mapInstance, mapMetadata, activeMap } = useMapContext();
+  const { attachPopupHandler } = usePopupContext();
   const [markers, setMarkers] = useState<Marker[]>([]);
   const [selectedMarkerType, setSelectedMarkerType] = useState<
     'artillery' | 'target'
@@ -70,12 +72,13 @@ export function MarkerProvider({ children }: { children: React.ReactNode }) {
           },
         });
       }
+      attachPopupHandler(map);
     };
 
     setupMarkers().catch((err) =>
       console.error('Failed to set up marker icon/layer:', err)
     );
-  }, [mapInstance]);
+  }, [mapInstance, attachPopupHandler]);
 
   useEffect(() => {
     if (!mapInstance || !mapMetadata || !activeMap) return;
@@ -84,6 +87,26 @@ export function MarkerProvider({ children }: { children: React.ReactNode }) {
     map.on('click', (e) => {
       const { lng, lat } = e.lngLat;
       const positions = convertToUnit(mapMetadata[activeMap], lng, lat);
+      const source = map.getSource('user-markers') as maplibregl.GeoJSONSource;
+      if (!source) return;
+
+      const current = source._data as GeoJSON.FeatureCollection;
+      const clickPoint = map.project([lng, lat]);
+      const thresholdPx = 20;
+
+      const exists = current.features.some((feature) => {
+        if (feature.geometry.type !== 'Point') return false;
+
+        const [fx, fy] = feature.geometry.coordinates;
+        const screenPos = map.project([fx, fy]);
+
+        const dx = screenPos.x - clickPoint.x;
+        const dy = screenPos.y - clickPoint.y;
+        return Math.sqrt(dx * dx + dy * dy) < thresholdPx;
+      });
+
+      if (exists) return;
+
       const id = crypto.randomUUID();
       const newFeature: GeoJSON.Feature = {
         type: 'Feature',
@@ -100,10 +123,6 @@ export function MarkerProvider({ children }: { children: React.ReactNode }) {
         },
       };
 
-      const source = map.getSource('user-markers') as maplibregl.GeoJSONSource;
-      if (!source) return;
-
-      const current = source._data as GeoJSON.FeatureCollection;
       current.features.push(newFeature);
       source.setData(current);
     });
