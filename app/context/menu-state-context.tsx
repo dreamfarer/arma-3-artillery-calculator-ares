@@ -12,8 +12,8 @@ type TMenuStateContext = {
 const MenuStateContext = createContext<TMenuStateContext | null>(null);
 
 export function MenuStateProvider({ children }: { children: React.ReactNode }) {
-  const [isMenuOpen, setIsMenuOpen] = useState(true);
-  const [activeMenuName, SetMenuName] = useState('filter');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeMenuName, SetMenuName] = useState('settings');
 
   const contextValue = useMemo<TMenuStateContext>(
     () => ({

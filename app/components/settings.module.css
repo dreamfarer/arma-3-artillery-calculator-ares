@@ -1,0 +1,48 @@
+.header {
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.scrollArea {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xl);
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-dark) transparent;
+}
+
+.scrollArea::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+.scrollArea::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollArea::-webkit-scrollbar-thumb {
+  background-color: var(--accent-dark);
+  border-radius: 0.25rem;
+}
+
+.results {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--padding-6xs);
+  width: 100%;
+}
+
+.noResult,
+.noBookmark {
+  color: var(--text-dark);
+  font-size: var(--font-size-title);
+  font-weight: 600;
+}
+
+.noBookmark.subtitle {
+  font-weight: 400;
+  font-size: var(--font-size-base);
+}

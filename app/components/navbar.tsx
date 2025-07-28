@@ -11,7 +11,7 @@ import { useEffect } from 'react';
 
 export default function Navbar() {
   const { isMenuOpen, toggleMenu, setActiveMenuName } = useMenuState();
-  const segment = usePathname().split('/').filter(Boolean).pop() ?? 'filter';
+  const segment = usePathname().split('/').filter(Boolean).pop() ?? 'settings';
 
   useEffect(() => {
     setActiveMenuName(segment);
@@ -21,7 +21,7 @@ export default function Navbar() {
     <div className={styles.navbar}>
       <Group>
         <Link
-          href="/artillery"
+          href="/altis/artillery"
           scroll={false}
           className={`${styles.button} ${styles.logo}`}
           aria-label="Home"
@@ -30,12 +30,12 @@ export default function Navbar() {
         </Link>
 
         <Link
-          href="/artillery"
+          href="/altis/artillery"
           scroll={false}
           className={`${styles.button} ${
-            segment === 'filter' ? styles.inactive : styles.active
+            segment === 'settings' ? styles.inactive : styles.active
           }`}
-          aria-label="Show filter"
+          aria-label="Show settings"
         >
           <ListDashesIcon size="2em" />
         </Link>

@@ -6,5 +6,5 @@ export const metadata: Metadata = {
 };
 
 export default function LandingPage() {
-  permanentRedirect('/artillery');
+  permanentRedirect('/altis/artillery');
 }
