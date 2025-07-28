@@ -32,7 +32,9 @@ export class ActivePopup {
     const container = document.createElement('div');
     const root = createRoot(container);
 
-    root.render(<Popup position={coordinates} />);
+    root.render(
+      <Popup position={[feature.properties.x, feature.properties.y]} />
+    );
 
     const popupInstance = new maplibregl.Popup({
       closeButton: false,
