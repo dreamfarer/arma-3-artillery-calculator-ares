@@ -1,11 +1,10 @@
 'use client';
 
-import { createContext, useContext, useState, useMemo, useEffect } from 'react';
+import { createContext, useContext, useState, useMemo } from 'react';
 import { useMapContext } from './map-context';
-import { Map } from 'maplibre-gl';
-import { convertToUnit } from '@/lib/convert';
-import { loadIcon } from '@/lib/marker-utility';
 import { usePopupContext } from './popup-context';
+import { useSetupMarkers } from '../hooks/use-setup-markers';
+import { useMapClickToAddMarker } from '../hooks/use-add-marker';
 
 type Marker = {
   id: string;
@@ -30,103 +29,13 @@ export function MarkerProvider({ children }: { children: React.ReactNode }) {
     'artillery' | 'target'
   >('artillery');
 
-  useEffect(() => {
-    if (!mapInstance) return;
-
-    const map = mapInstance as Map;
-
-    const setupMarkers = async () => {
-      if (!map.hasImage('artillery')) {
-        const artilleryImg = await loadIcon(
-          map,
-          '/icon/64/artillery-marker.webp'
-        );
-        map.addImage('artillery', artilleryImg);
-      }
-
-      if (!map.hasImage('target')) {
-        const targetImg = await loadIcon(map, '/icon/64/target-marker.webp');
-        map.addImage('target', targetImg);
-      }
-
-      if (!map.getSource('user-markers')) {
-        map.addSource('user-markers', {
-          type: 'geojson',
-          data: {
-            type: 'FeatureCollection',
-            features: [],
-          },
-        });
-      }
-
-      if (!map.getLayer('user-markers-layer')) {
-        map.addLayer({
-          id: 'user-markers-layer',
-          type: 'symbol',
-          source: 'user-markers',
-          layout: {
-            'icon-image': ['get', 'markerType'],
-            'icon-size': 0.5,
-            'icon-allow-overlap': true,
-            'icon-anchor': 'center',
-          },
-        });
-      }
-      attachPopupHandler(map);
-    };
-
-    setupMarkers().catch((err) =>
-      console.error('Failed to set up marker icon/layer:', err)
-    );
-  }, [mapInstance, attachPopupHandler]);
-
-  useEffect(() => {
-    if (!mapInstance || !mapMetadata || !activeMap) return;
-    const map = mapInstance as Map;
-
-    map.on('click', (e) => {
-      const { lng, lat } = e.lngLat;
-      const positions = convertToUnit(mapMetadata[activeMap], lng, lat);
-      const source = map.getSource('user-markers') as maplibregl.GeoJSONSource;
-      if (!source) return;
-
-      const current = source._data as GeoJSON.FeatureCollection;
-      const clickPoint = map.project([lng, lat]);
-      const thresholdPx = 20;
-
-      const exists = current.features.some((feature) => {
-        if (feature.geometry.type !== 'Point') return false;
-
-        const [fx, fy] = feature.geometry.coordinates;
-        const screenPos = map.project([fx, fy]);
-
-        const dx = screenPos.x - clickPoint.x;
-        const dy = screenPos.y - clickPoint.y;
-        return Math.sqrt(dx * dx + dy * dy) < thresholdPx;
-      });
-
-      if (exists) return;
-
-      const id = crypto.randomUUID();
-      const newFeature: GeoJSON.Feature = {
-        type: 'Feature',
-        geometry: {
-          type: 'Point',
-          coordinates: [lng, lat],
-        },
-        properties: {
-          id,
-          x: positions[0],
-          y: positions[1],
-          map: activeMap,
-          markerType: selectedMarkerType,
-        },
-      };
-
-      current.features.push(newFeature);
-      source.setData(current);
-    });
-  }, [mapInstance, activeMap, mapMetadata, selectedMarkerType]);
+  useSetupMarkers(mapInstance, attachPopupHandler);
+  useMapClickToAddMarker(
+    mapInstance,
+    mapMetadata,
+    activeMap,
+    selectedMarkerType
+  );
 
   const contextValue = useMemo<TMarkerContext>(
     () => ({
