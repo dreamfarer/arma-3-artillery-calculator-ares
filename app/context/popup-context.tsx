@@ -17,7 +17,7 @@ type TPopupContext = {
 };
 
 const PopupContext = createContext<TPopupContext | null>(null);
-const MARKERS_LAYER = 'user-markers-layer';
+const MARKERS_LAYER = 'artillery-layer';
 
 export function PopupProvider({ children }: { children: React.ReactNode }) {
   const [attachedMaps] = useState(() => new WeakSet<Map>());

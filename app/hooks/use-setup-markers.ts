@@ -23,8 +23,8 @@ export function useSetupMarkers(
         map.addImage('target', targetImg);
       }
 
-      if (!map.getSource('user-markers')) {
-        map.addSource('user-markers', {
+      if (!map.getSource('units')) {
+        map.addSource('units', {
           type: 'geojson',
           data: {
             type: 'FeatureCollection',
@@ -33,17 +33,33 @@ export function useSetupMarkers(
         });
       }
 
-      if (!map.getLayer('user-markers-layer')) {
+      if (!map.getLayer('artillery-layer')) {
         map.addLayer({
-          id: 'user-markers-layer',
+          id: 'artillery-layer',
           type: 'symbol',
-          source: 'user-markers',
+          source: 'units',
           layout: {
-            'icon-image': ['get', 'markerType'],
+            'icon-image': 'artillery',
             'icon-size': 0.5,
             'icon-allow-overlap': true,
             'icon-anchor': 'center',
           },
+          filter: ['==', ['get', 'markerType'], 'artillery'],
+        });
+      }
+
+      if (!map.getLayer('target-layer')) {
+        map.addLayer({
+          id: 'target-layer',
+          type: 'symbol',
+          source: 'units',
+          layout: {
+            'icon-image': 'target',
+            'icon-size': 0.5,
+            'icon-allow-overlap': true,
+            'icon-anchor': 'center',
+          },
+          filter: ['==', ['get', 'markerType'], 'target'],
         });
       }
 

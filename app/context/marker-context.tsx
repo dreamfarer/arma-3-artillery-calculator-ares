@@ -1,50 +1,29 @@
 'use client';
 
-import { createContext, useContext, useState, useMemo } from 'react';
+import { createContext, useContext, useMemo, ReactNode } from 'react';
 import { useMapContext } from './map-context';
 import { usePopupContext } from './popup-context';
 import { useSetupMarkers } from '../hooks/use-setup-markers';
 import { useMapClickToAddMarker } from '../hooks/use-add-marker';
 
-type Marker = {
-  id: string;
-  x: number;
-  y: number;
-};
-
 type TMarkerContext = {
-  markers: Marker[];
-  setMarkers: (markers: Marker[]) => void;
-  selectedMarkerType: 'artillery' | 'target';
-  setSelectedMarkerType: (type: 'artillery' | 'target') => void;
+  debug: boolean;
 };
 
 const MarkerContext = createContext<TMarkerContext | null>(null);
 
-export function MarkerProvider({ children }: { children: React.ReactNode }) {
+export function MarkerProvider({ children }: { children: ReactNode }) {
   const { mapInstance, mapMetadata, activeMap } = useMapContext();
   const { attachPopupHandler } = usePopupContext();
-  const [markers, setMarkers] = useState<Marker[]>([]);
-  const [selectedMarkerType, setSelectedMarkerType] = useState<
-    'artillery' | 'target'
-  >('artillery');
 
   useSetupMarkers(mapInstance, attachPopupHandler);
-  useMapClickToAddMarker(
-    mapInstance,
-    mapMetadata,
-    activeMap,
-    selectedMarkerType
-  );
+  useMapClickToAddMarker(mapInstance, 'units', mapMetadata, activeMap);
 
   const contextValue = useMemo<TMarkerContext>(
     () => ({
-      markers,
-      setMarkers,
-      selectedMarkerType,
-      setSelectedMarkerType,
+      debug: false,
     }),
-    [markers, selectedMarkerType]
+    []
   );
 
   return (
