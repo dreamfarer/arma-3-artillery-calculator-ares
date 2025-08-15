@@ -1,10 +1,5 @@
-import { MapMetadataRecord } from '@/types/map-metadata';
 import { Map } from 'maplibre-gl';
 import { FeatureCollection } from 'geojson';
-
-export async function loadMapMetadata(): Promise<MapMetadataRecord> {
-  return fetch('/maps.json').then((r) => r.json());
-}
 
 export function isSpaceBlocked(
   map: Map,

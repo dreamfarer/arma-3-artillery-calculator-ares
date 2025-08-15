@@ -1,10 +1,10 @@
 export type MapMetadata = {
   tileSize: number;
-  size: [number, number];
+  size: number[];
   devUrl: string;
   prodUrl: string;
-  boundsData: [number, number, number, number];
-  boundsImage: [number, number, number, number];
+  boundsData: number[];
+  boundsImage: number[];
   minZoom: number;
   maxZoom: number;
   maxOverscaledZoom: number;

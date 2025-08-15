@@ -4,6 +4,7 @@ import { MarkerProvider } from '@/app/context/marker-context';
 import { PopupProvider } from '@/app/context/popup-context';
 import { Metadata } from 'next';
 import { ReactNode } from 'react';
+import maps from '@/public/maps.json';
 
 type MapParams = { map: string };
 
@@ -26,9 +27,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function ArtilleryLayout({ children }: Props) {
+export default async function ArtilleryLayout({ children, params }: Props) {
+  const mapMetadata = maps;
+  const activeMap = (await params).map ?? 'altis';
   return (
-    <MapProvider>
+    <MapProvider mapMetadata={mapMetadata} initialActiveMap={activeMap}>
       <PopupProvider>
         <MarkerProvider>
           <MapWrapper />

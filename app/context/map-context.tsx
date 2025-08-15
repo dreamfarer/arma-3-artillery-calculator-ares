@@ -1,33 +1,30 @@
 'use client';
 
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import { loadMapMetadata } from '@/lib/map-utility';
-import { MapMetadataRecord } from '@/types/map-metadata';
+import { createContext, ReactNode, useContext, useMemo, useState } from 'react';
 import { Map } from 'maplibre-gl';
+import type { MapMetadataRecord } from '@/types/map-metadata';
 
 type TMapContext = {
   mapInstance: Map | null;
   mapMetadata: MapMetadataRecord | null;
-  activeMap: string | null;
-  setMapInstance: (map: Map) => void;
+  activeMap: string;
+  setMapInstance: (map: Map | null) => void;
   setActiveMap: (mapName: string) => void;
 };
 
 const MapContext = createContext<TMapContext | null>(null);
 
-export function MapProvider({ children }: { children: React.ReactNode }) {
+export function MapProvider({
+  children,
+  mapMetadata,
+  initialActiveMap = 'altis',
+}: {
+  children: ReactNode;
+  mapMetadata: MapMetadataRecord | null;
+  initialActiveMap?: string;
+}) {
   const [mapInstance, setMapInstance] = useState<Map | null>(null);
-  const [activeMap, setActiveMap] = useState<string | null>('altis');
-  const [mapMetadata, setMapMetadata] = useState<MapMetadataRecord | null>(
-    null
-  );
-
-  useEffect(() => {
-    const load = async () => {
-      setMapMetadata(await loadMapMetadata());
-    };
-    load();
-  }, []);
+  const [activeMap, setActiveMap] = useState<string>(initialActiveMap);
 
   const contextValue = useMemo<TMapContext>(
     () => ({
@@ -37,7 +34,7 @@ export function MapProvider({ children }: { children: React.ReactNode }) {
       setMapInstance,
       setActiveMap,
     }),
-    [mapInstance, mapMetadata, activeMap, setMapInstance, setActiveMap]
+    [mapInstance, mapMetadata, activeMap]
   );
 
   return (
@@ -46,8 +43,7 @@ export function MapProvider({ children }: { children: React.ReactNode }) {
 }
 
 export function useMapContext() {
-  const context = useContext(MapContext);
-  if (!context)
-    throw new Error('useMapContext must be used inside <MapProvider>');
-  return context;
+  const ctx = useContext(MapContext);
+  if (!ctx) throw new Error('useMapContext must be used inside <MapProvider>');
+  return ctx;
 }
