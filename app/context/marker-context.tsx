@@ -1,6 +1,14 @@
 'use client';
 
-import { createContext, useContext, useMemo, ReactNode } from 'react';
+import {
+  createContext,
+  useContext,
+  useMemo,
+  ReactNode,
+  useRef,
+  useEffect,
+} from 'react';
+import type { Popup as PopupMapLibre } from 'maplibre-gl';
 import { useMapContext } from './map-context';
 import { useSetupMarkers } from '../hooks/use-setup-markers';
 import { useAddMarker } from '@/app/hooks/use-add-marker';
@@ -17,13 +25,50 @@ export function MarkerProvider({
   children,
 }: Readonly<{ children: ReactNode }>) {
   const { mapInstance, mapMetadata, activeMap } = useMapContext();
+  const popupsRef = useRef(new Map<string, PopupMapLibre>());
+
+  useEffect(() => {
+    const popups = popupsRef.current;
+    return () => {
+      popups.forEach((p) => p.remove());
+      popups.clear();
+    };
+  }, []);
 
   useSetupMarkers(mapInstance);
   useAddMarker(mapInstance, 'units', mapMetadata, activeMap);
-  useRemoveMarker(mapInstance, 'units', 'artillery', mapMetadata, activeMap);
-  useRemoveMarker(mapInstance, 'units', 'target', mapMetadata, activeMap);
-  useTogglePopup(mapInstance, 'units', 'artillery', mapMetadata, activeMap);
-  useTogglePopup(mapInstance, 'units', 'target', mapMetadata, activeMap);
+  useRemoveMarker(
+    mapInstance,
+    'units',
+    'artillery',
+    mapMetadata,
+    activeMap,
+    popupsRef
+  );
+  useRemoveMarker(
+    mapInstance,
+    'units',
+    'target',
+    mapMetadata,
+    activeMap,
+    popupsRef
+  );
+  useTogglePopup(
+    mapInstance,
+    'units',
+    'artillery',
+    mapMetadata,
+    activeMap,
+    popupsRef
+  );
+  useTogglePopup(
+    mapInstance,
+    'units',
+    'target',
+    mapMetadata,
+    activeMap,
+    popupsRef
+  );
 
   const contextValue = useMemo<TMarkerContext>(
     () => ({
