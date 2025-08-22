@@ -7,7 +7,7 @@ import {
 import { MapMetadataRecord } from '@/types/map-metadata';
 import { RefObject, useEffect } from 'react';
 import { Feature } from 'geojson';
-import { removeFeature } from '@/lib/map-utility';
+import { removeFeature } from '@/lib/marker/remove-feature';
 
 export function useRemoveMarker(
   map: MapMapLibre | null,

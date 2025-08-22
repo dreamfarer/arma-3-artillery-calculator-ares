@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Map } from 'maplibre-gl';
-import { loadIcon } from '@/lib/marker-utility';
+import { loadIcon } from '@/lib/marker/load-icon';
 
 export function useSetupMarkers(map: Map | null) {
   useEffect(() => {

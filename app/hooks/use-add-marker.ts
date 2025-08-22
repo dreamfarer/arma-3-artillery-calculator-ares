@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import type { GeoJSONSource, Map, MapMouseEvent } from 'maplibre-gl';
-import { addFeature, isSpaceBlocked } from '@/lib/map-utility';
 import { MapMetadataRecord } from '@/types/map-metadata';
+import { isSpaceBlocked } from '@/lib/marker/is-space-blocked';
+import { addFeature } from '@/lib/marker/add-feature';
 
 export function useAddMarker(
   map: Map | null,
