@@ -33,9 +33,9 @@ export function useSetupMarkers(
         });
       }
 
-      if (!map.getLayer('artillery-layer')) {
+      if (!map.getLayer('artillery')) {
         map.addLayer({
-          id: 'artillery-layer',
+          id: 'artillery',
           type: 'symbol',
           source: 'units',
           layout: {
@@ -48,9 +48,9 @@ export function useSetupMarkers(
         });
       }
 
-      if (!map.getLayer('target-layer')) {
+      if (!map.getLayer('target')) {
         map.addLayer({
-          id: 'target-layer',
+          id: 'target',
           type: 'symbol',
           source: 'units',
           layout: {

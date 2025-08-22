@@ -4,7 +4,8 @@ import { createContext, useContext, useMemo, ReactNode } from 'react';
 import { useMapContext } from './map-context';
 import { usePopupContext } from './popup-context';
 import { useSetupMarkers } from '../hooks/use-setup-markers';
-import { useMapClickToAddMarker } from '../hooks/use-add-marker';
+import { useAddMarker } from '@/app/hooks/map/useAddMarker';
+import { useRemoveMarker } from '@/app/hooks/map/useRemoveMarker';
 
 type TMarkerContext = {
   debug: boolean;
@@ -17,7 +18,9 @@ export function MarkerProvider({ children }: { children: ReactNode }) {
   const { attachPopupHandler } = usePopupContext();
 
   useSetupMarkers(mapInstance, attachPopupHandler);
-  useMapClickToAddMarker(mapInstance, 'units', mapMetadata, activeMap);
+  useAddMarker(mapInstance, 'units', mapMetadata, activeMap);
+  useRemoveMarker(mapInstance, 'units', 'artillery', mapMetadata, activeMap);
+  useRemoveMarker(mapInstance, 'units', 'target', mapMetadata, activeMap);
 
   const contextValue = useMemo<TMarkerContext>(
     () => ({
