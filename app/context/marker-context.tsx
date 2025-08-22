@@ -4,8 +4,8 @@ import { createContext, useContext, useMemo, ReactNode } from 'react';
 import { useMapContext } from './map-context';
 import { usePopupContext } from './popup-context';
 import { useSetupMarkers } from '../hooks/use-setup-markers';
-import { useAddMarker } from '@/app/hooks/map/useAddMarker';
-import { useRemoveMarker } from '@/app/hooks/map/useRemoveMarker';
+import { useAddMarker } from '@/app/hooks/marker/useAddMarker';
+import { useRemoveMarker } from '@/app/hooks/marker/useRemoveMarker';
 
 type TMarkerContext = {
   debug: boolean;
