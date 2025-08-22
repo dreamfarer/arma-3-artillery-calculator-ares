@@ -18,11 +18,11 @@ export function MapProvider({
   children,
   mapMetadata,
   initialActiveMap = 'altis',
-}: {
+}: Readonly<{
   children: ReactNode;
   mapMetadata: MapMetadataRecord | null;
   initialActiveMap?: string;
-}) {
+}>) {
   const [mapInstance, setMapInstance] = useState<Map | null>(null);
   const [activeMap, setActiveMap] = useState<string>(initialActiveMap);
 

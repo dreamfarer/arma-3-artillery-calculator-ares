@@ -5,7 +5,7 @@ const HEADER_SIZE = 4 + 4 + 4 + 4 + 4; // width, height, min, max, spacing = 20 
 const CELL_SIZE = 2; // uint16
 
 export function useElevation() {
-  const getElevation = useCallback(
+  return useCallback(
     async (worldX: number, worldY: number): Promise<number | null> => {
       const headerResp = await fetch(BIN_URL, {
         headers: { Range: `bytes=0-${HEADER_SIZE - 1}` },
@@ -50,12 +50,8 @@ export function useElevation() {
       const valueBuffer = await valueResp.arrayBuffer();
       const quantized = new DataView(valueBuffer).getUint16(0, true);
       const norm = quantized / 65535;
-      const elevation = min + norm * (max - min);
-
-      return elevation;
+      return min + norm * (max - min);
     },
     []
   );
-
-  return getElevation;
 }

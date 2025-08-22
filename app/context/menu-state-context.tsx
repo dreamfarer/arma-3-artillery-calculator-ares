@@ -1,5 +1,5 @@
 'use client';
-import { createContext, useContext, useMemo, useState } from 'react';
+import { createContext, ReactNode, useContext, useMemo, useState } from 'react';
 
 type TMenuStateContext = {
   isMenuOpen: boolean;
@@ -11,9 +11,11 @@ type TMenuStateContext = {
 
 const MenuStateContext = createContext<TMenuStateContext | null>(null);
 
-export function MenuStateProvider({ children }: { children: React.ReactNode }) {
+export function MenuStateProvider({
+  children,
+}: Readonly<{ children: ReactNode }>) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeMenuName, SetMenuName] = useState('settings');
+  const [activeMenuName, setActiveMenuName] = useState('settings');
 
   const contextValue = useMemo<TMenuStateContext>(
     () => ({
@@ -21,7 +23,7 @@ export function MenuStateProvider({ children }: { children: React.ReactNode }) {
       activeMenuName,
       toggleMenu: () => setIsMenuOpen((v) => !v),
       setMenuOpen: (v: boolean) => setIsMenuOpen(v),
-      setActiveMenuName: (v: string) => SetMenuName(v),
+      setActiveMenuName: (v: string) => setActiveMenuName(v),
     }),
     [isMenuOpen, activeMenuName]
   );

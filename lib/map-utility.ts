@@ -3,10 +3,6 @@ import { Feature, FeatureCollection } from 'geojson';
 import { MapMetadata } from '@/types/map-metadata';
 import { convertToUnit } from '@/lib/convert';
 
-export function getSource(map: Map, sourceId: string) {
-  return map.getSource(sourceId) as GeoJSONSource | undefined;
-}
-
 export async function addFeature(
   mapName: string,
   metadata: MapMetadata,

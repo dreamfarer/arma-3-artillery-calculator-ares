@@ -2,10 +2,7 @@ import { useEffect } from 'react';
 import { Map } from 'maplibre-gl';
 import { loadIcon } from '@/lib/marker-utility';
 
-export function useSetupMarkers(
-  map: Map | null,
-  attachPopupHandler: (map: Map) => void
-) {
+export function useSetupMarkers(map: Map | null) {
   useEffect(() => {
     if (!map) return;
 
@@ -62,12 +59,10 @@ export function useSetupMarkers(
           filter: ['==', ['get', 'markerType'], 'target'],
         });
       }
-
-      attachPopupHandler(map);
     };
 
     setup().catch((err) =>
       console.error('Failed to set up marker icon/layer:', err)
     );
-  }, [map, attachPopupHandler]);
+  }, [map]);
 }

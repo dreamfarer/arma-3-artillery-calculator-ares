@@ -1,7 +1,6 @@
 import MapWrapper from '@/app/components/map-wrapper';
 import { MapProvider } from '@/app/context/map-context';
 import { MarkerProvider } from '@/app/context/marker-context';
-import { PopupProvider } from '@/app/context/popup-context';
 import { Metadata } from 'next';
 import { ReactNode } from 'react';
 import maps from '@/public/maps.json';
@@ -32,12 +31,10 @@ export default async function ArtilleryLayout({ children, params }: Props) {
   const activeMap = (await params).map ?? 'altis';
   return (
     <MapProvider mapMetadata={mapMetadata} initialActiveMap={activeMap}>
-      <PopupProvider>
-        <MarkerProvider>
-          <MapWrapper />
-          {children}
-        </MarkerProvider>
-      </PopupProvider>
+      <MarkerProvider>
+        <MapWrapper />
+        {children}
+      </MarkerProvider>
     </MapProvider>
   );
 }

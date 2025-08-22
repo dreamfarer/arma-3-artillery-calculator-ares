@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import type { Map, MapMouseEvent } from 'maplibre-gl';
-import { addFeature, getSource, isSpaceBlocked } from '@/lib/map-utility';
+import type { GeoJSONSource, Map, MapMouseEvent } from 'maplibre-gl';
+import { addFeature, isSpaceBlocked } from '@/lib/map-utility';
 import { MapMetadataRecord } from '@/types/map-metadata';
 
 export function useAddMarker(
@@ -13,11 +13,18 @@ export function useAddMarker(
     if (!map || !mapMetadata || !activeMap) return;
 
     const handleAdd = async (e: MapMouseEvent) => {
-      const source = getSource(map, sourceId);
+      const source = map.getSource(sourceId);
       if (!source) return;
       const { lng, lat } = e.lngLat;
-      if (await isSpaceBlocked(map, source, 20, lng, lat)) return;
-      await addFeature(activeMap, mapMetadata[activeMap], source, lat, lng);
+      if (await isSpaceBlocked(map, source as GeoJSONSource, 20, lng, lat))
+        return;
+      await addFeature(
+        activeMap,
+        mapMetadata[activeMap],
+        source as GeoJSONSource,
+        lat,
+        lng
+      );
     };
 
     map.on('click', handleAdd);
