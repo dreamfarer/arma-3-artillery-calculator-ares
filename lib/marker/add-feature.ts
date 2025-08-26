@@ -1,25 +1,27 @@
 import { MapMetadata } from '@/types/map-metadata';
 import type { GeoJSONSource } from 'maplibre-gl';
-import { convertToUnit } from '@/lib/convert';
 import { Feature, FeatureCollection } from 'geojson';
 import { getNextMarkerType } from '@/lib/marker/get-next-marker-type';
+import { convertToPoint } from '@/lib/geo/convert-to-point';
+import { LatLng } from '@/types/lat-lng';
 
 export async function addFeature(
   mapName: string,
   metadata: MapMetadata,
   source: GeoJSONSource,
-  lat: number,
-  lng: number
+  latLng: LatLng
 ) {
-  const [x, y] = convertToUnit(metadata, lng, lat);
+  const position = convertToPoint(metadata, latLng);
   const data = (await source.getData()) as FeatureCollection;
   const newFeature: Feature = {
     type: 'Feature',
-    geometry: { type: 'Point', coordinates: [lng, lat] },
+    geometry: {
+      type: 'Point',
+      coordinates: [latLng.lng, latLng.lat],
+    },
     properties: {
       id: crypto.randomUUID(),
-      x,
-      y,
+      position,
       map: mapName,
       markerType: getNextMarkerType(data),
     },

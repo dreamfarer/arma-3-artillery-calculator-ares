@@ -7,7 +7,7 @@ type Props = {
   children: ReactNode;
 };
 
-export default function Menu({ children }: Props) {
+export default function Menu({ children }: Readonly<Props>) {
   const { isMenuOpen } = useMenuState();
   return (
     <div className={`${styles.menu} ${!isMenuOpen ? styles.closed : ''}`}>

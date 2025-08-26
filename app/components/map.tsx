@@ -4,7 +4,9 @@ import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import styles from './map.module.css';
 import { useMapContext } from '../context/map-context';
-import { getMapBoundsLatLng, remToPx, vhToPx } from '@/lib/convert';
+import { remToPx, vhToPx } from '@/lib/convert';
+import { flattenRectangleLatLng } from '@/lib/geo/flatten-rectangle-lat-lng';
+import { getMapBounds } from '@/lib/geo/get-map-bounds';
 
 export default function Map() {
   const mapContainer = useRef<HTMLDivElement>(null);
@@ -18,7 +20,7 @@ export default function Map() {
 
     const isDev = process.env.NODE_ENV === 'development';
     const tiles = isDev ? meta.devUrl : meta.prodUrl;
-    const bounds = getMapBoundsLatLng(meta);
+    const bounds = flattenRectangleLatLng(getMapBounds(meta));
     let wasMobile = mapContainer.current.offsetWidth < 768;
 
     const map = new maplibregl.Map({

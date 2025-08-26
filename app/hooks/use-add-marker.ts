@@ -16,15 +16,13 @@ export function useAddMarker(
     const handleAdd = async (e: MapMouseEvent) => {
       const source = map.getSource(sourceId);
       if (!source) return;
-      const { lng, lat } = e.lngLat;
-      if (await isSpaceBlocked(map, source as GeoJSONSource, 20, lng, lat))
+      if (await isSpaceBlocked(map, source as GeoJSONSource, 20, e.lngLat))
         return;
       await addFeature(
         activeMap,
         mapMetadata[activeMap],
         source as GeoJSONSource,
-        lat,
-        lng
+        e.lngLat
       );
     };
 

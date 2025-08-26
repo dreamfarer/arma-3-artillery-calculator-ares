@@ -36,7 +36,7 @@ export function useTogglePopup(
 
       const container = document.createElement('div');
       const root = createRoot(container);
-      root.render(<Popup position={[properties.x, properties.y]} />);
+      root.render(<Popup position={properties.position} />);
 
       const popup = new PopupMapLibre({
         closeButton: false,
