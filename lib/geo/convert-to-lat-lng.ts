@@ -1,8 +1,8 @@
 import { LatLng } from '@/types/lat-lng';
 import { MapMetadata } from '@/types/map-metadata';
-import { Point } from '@/types/point';
+import { Point2D } from '@/types/point-2-d';
 
-export function convertToLatLng(map: MapMetadata, point: Point): LatLng {
+export function convertToLatLng(map: MapMetadata, point: Point2D): LatLng {
   const [imgW, imgH] = map.size;
   const [bx0, by0, bx1, by1] = map.boundsImage;
   const [dx0, dy0, dx1, dy1] = map.boundsData;

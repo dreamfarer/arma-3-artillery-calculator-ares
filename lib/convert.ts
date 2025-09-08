@@ -21,3 +21,7 @@ export function pxToVh(px: number): number {
 export function pxToVw(px: number): number {
   return (px / window.innerWidth) * 100;
 }
+
+export function radToDeg(rad: number): number {
+  return rad * (180 / Math.PI);
+}
