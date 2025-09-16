@@ -16,8 +16,6 @@ export default function Map() {
     if (!mapContainer.current || !mapMetadata || !activeMap) return;
 
     const meta = mapMetadata[activeMap];
-    if (!meta) return;
-
     const isDev = process.env.NODE_ENV === 'development';
     const tiles = isDev ? meta.devUrl : meta.prodUrl;
     const bounds = flattenRectangleLatLng(getMapBounds(meta));

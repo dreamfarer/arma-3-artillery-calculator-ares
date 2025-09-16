@@ -3,6 +3,8 @@ export type MapMetadata = {
   size: number[];
   devUrl: string;
   prodUrl: string;
+  elevationDevUrl: string;
+  elevationProdUrl: string;
   boundsData: number[];
   boundsImage: number[];
   minZoom: number;
