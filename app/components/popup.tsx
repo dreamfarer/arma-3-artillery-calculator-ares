@@ -1,14 +1,26 @@
 import React from 'react';
-import { ArtilleryFiringSolution } from '@/types/artillery-firing-solution';
+import { ArtilleryFeatureProperties } from '@/types/artillery-feature-properties';
+import { TargetFeatureProperties } from '@/types/target-feature-properties';
 
-export default function Popup({
-  firingSolution,
-}: Readonly<{ firingSolution: ArtilleryFiringSolution }>) {
+type PopupProps = {
+  properties: ArtilleryFeatureProperties | TargetFeatureProperties;
+};
+
+export default function Popup({ properties }: Readonly<PopupProps>) {
+  if (properties.markerType === 'target') {
+    const { azimuth, direct, indirect, fireMode } = properties;
+    return (
+      <div>
+        <p>azimuth: {azimuth}°</p>
+        <p>direct: {direct}°</p>
+        <p>indirect: {indirect}°</p>
+        <p>fire mode: {fireMode}</p>
+      </div>
+    );
+  }
   return (
     <div>
-      <p>azimuth: {firingSolution.azimuth}°</p>
-      <p>direct: {firingSolution.elevation.direct}°</p>
-      <p>indirect: {firingSolution.elevation.indirect}°</p>
+      <p>artillery unit</p>
     </div>
   );
 }

@@ -14,5 +14,10 @@ export async function getArtilleryPosition(
     throw new Error('No artillery marker type found in the feature collection');
   }
 
-  return artilleryFeature.properties?.position;
+  const properties = artilleryFeature.properties;
+  if (!properties) {
+    throw new Error('No properties found on the source feature');
+  }
+
+  return { x: properties.x, y: properties.y, z: properties.z };
 }

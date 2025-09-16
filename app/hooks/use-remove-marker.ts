@@ -3,11 +3,12 @@ import {
   Popup as PopupMapLibre,
   Map as MapMapLibre,
   MapLayerMouseEvent,
+  MapGeoJSONFeature,
 } from 'maplibre-gl';
 import { MapMetadataRecord } from '@/types/map-metadata';
 import { RefObject, useEffect } from 'react';
-import { Feature } from 'geojson';
 import { removeFeature } from '@/lib/marker/remove-feature';
+import { getFeatureId } from '@/lib/marker/get-feature-id';
 
 export function useRemoveMarker(
   map: MapMapLibre | null,
@@ -22,18 +23,17 @@ export function useRemoveMarker(
     const popups = popupsRef.current;
 
     const handleRemove = async (e: MapLayerMouseEvent) => {
-      const source = map.getSource(sourceId);
-      const feature = e.features?.[0] as Feature | null;
+      const source = map.getSource(sourceId) as GeoJSONSource;
+      const feature = e.features?.[0] as MapGeoJSONFeature | null;
       if (!source || !feature) return;
 
-      const id =
-        feature.properties && (feature.properties.id as string | undefined);
-      if (id && popups.has(id)) {
+      const id = getFeatureId(feature);
+      if (popups.has(id)) {
         popups.get(id)!.remove();
         popups.delete(id);
       }
 
-      await removeFeature(source as GeoJSONSource, feature);
+      await removeFeature(source, feature);
     };
 
     map.on('contextmenu', markerLayerId, handleRemove);

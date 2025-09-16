@@ -2,16 +2,15 @@ import {
   Popup as PopupMapLibre,
   Map as MapMapLibre,
   MapLayerMouseEvent,
-  GeoJSONSource,
+  MapGeoJSONFeature,
 } from 'maplibre-gl';
 import { MapMetadataRecord } from '@/types/map-metadata';
 import { RefObject, useEffect } from 'react';
-import { GeoJsonProperties, Point } from 'geojson';
+import { Point } from 'geojson';
 import { createRoot } from 'react-dom/client';
 import Popup from '../components/popup';
-import { getArtilleryPosition } from '@/lib/map/get-artillery-position';
-import { getArtilleryFiringSolution } from '@/lib/artillery/get-artillery-firing-solution';
-import { Point3D } from '@/types/point-3-d';
+import { ArtilleryFeatureProperties } from '@/types/artillery-feature-properties';
+import { TargetFeatureProperties } from '@/types/target-feature-properties';
 
 export function useTogglePopup(
   map: MapMapLibre | null,
@@ -26,11 +25,11 @@ export function useTogglePopup(
     const popups = popupsRef.current;
 
     const handleToggle = async (e: MapLayerMouseEvent) => {
-      const source = map.getSource(sourceId) as GeoJSONSource;
-      const geometry = e.features?.[0].geometry as Point;
-      const properties = e.features?.[0].properties as GeoJsonProperties | null;
-      const id = properties?.id as string | undefined;
-      if (!source || !properties || !id) return;
+      const feature = e.features?.[0] as MapGeoJSONFeature;
+      const properties = feature.properties as
+        | ArtilleryFeatureProperties
+        | TargetFeatureProperties;
+      const id = properties.id;
 
       if (popups.has(id)) {
         popups.get(id)!.remove();
@@ -40,15 +39,7 @@ export function useTogglePopup(
 
       const container = document.createElement('div');
       const root = createRoot(container);
-
-      const artilleryPosition = await getArtilleryPosition(source);
-      const targetPosition = JSON.parse(properties.position) as Point3D;
-      const firingSolution = getArtilleryFiringSolution(
-        artilleryPosition,
-        targetPosition
-      );
-
-      root.render(<Popup firingSolution={firingSolution} />);
+      root.render(<Popup properties={properties} />);
 
       const popup = new PopupMapLibre({
         closeButton: false,
@@ -57,7 +48,9 @@ export function useTogglePopup(
         closeOnClick: false,
       })
         .setDOMContent(container)
-        .setLngLat(geometry.coordinates as [number, number])
+        .setLngLat(
+          (e.features?.[0].geometry as Point).coordinates as [number, number]
+        )
         .addTo(map);
 
       popup.on('remove', () => {

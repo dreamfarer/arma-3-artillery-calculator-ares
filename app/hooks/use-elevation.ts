@@ -27,8 +27,6 @@ export function useElevation() {
     const gridX = Math.floor(point2d.x / spacing);
     const gridY = Math.floor(point2d.y / spacing);
 
-    console.log(gridX, gridY);
-
     if (gridX < 0 || gridX >= xCount || gridY < 0 || gridY >= yCount) {
       console.error(`Coordinates (${gridX}, ${gridY}) out of bounds`);
     }
@@ -49,7 +47,6 @@ export function useElevation() {
     const valueBuffer = await valueResp.arrayBuffer();
     const quantized = new DataView(valueBuffer).getUint16(0, true);
     const norm = quantized / 65535;
-    console.log(min + norm * (max - min));
     return min + norm * (max - min);
   }, []);
 }
