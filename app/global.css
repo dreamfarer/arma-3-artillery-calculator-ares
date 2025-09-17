@@ -34,7 +34,8 @@
   --background-dark: #0a0a0a;
   --text-dark: #d5d5d5;
   --text-disabled-dark: #777777;
-  --theme: #dd0000;
+  --theme-main: #dd0000;
+  --theme-secondary: #de9f0c;
   --tile-background: #b7cbe6;
 }
 
@@ -53,7 +54,7 @@ a {
 @media (hover: hover) {
   button:hover,
   a:hover {
-    color: var(--theme) !important;
+    color: var(--theme-main) !important;
   }
 }
 
@@ -66,7 +67,6 @@ body {
   align-items: stretch;
   margin: 0;
   line-height: normal;
-  height: 100%;
   font-family: var(--font-inter);
   background: var(--background-dark);
 }
@@ -79,16 +79,18 @@ body {
 }
 
 /* Overwrite MapLibre GL Popup */
-.equinox-popup.maplibregl-popup {
+.unit-popup.maplibregl-popup {
   padding: 0;
   background: none;
   border: none;
 }
 
-.equinox-popup .maplibregl-popup-content {
+.unit-popup .maplibregl-popup-content {
   padding: 0;
   background: transparent;
   border: none;
+  width: 15rem;
+
 }
 
 .maplibregl-popup-anchor-top .maplibregl-popup-tip,

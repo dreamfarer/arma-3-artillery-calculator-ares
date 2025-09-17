@@ -43,7 +43,7 @@ export function useTogglePopup(
 
       const popup = new PopupMapLibre({
         closeButton: false,
-        className: 'unit',
+        className: 'unit-popup',
         offset: 25,
         closeOnClick: false,
       })

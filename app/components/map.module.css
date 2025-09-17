@@ -36,7 +36,7 @@
 }
 
 .overlayContent button {
-  background-color: var(--theme);
+  background-color: var(--theme-main);
   color: var(--background-dark);
   border: none;
   padding: 0.4rem 1.2rem;
