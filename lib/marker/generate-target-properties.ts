@@ -4,6 +4,7 @@ import { getArtilleryPosition } from '@/lib/map/get-artillery-position';
 import { GeoJSONSource } from 'maplibre-gl';
 import { Point3D } from '@/types/point-3-d';
 import { TargetFeatureProperties } from '@/types/target-feature-properties';
+import { FeatureCollection } from 'geojson';
 
 export async function generateTargetProperties(
   map: string,
@@ -11,7 +12,10 @@ export async function generateTargetProperties(
   position: Point2D,
   elevation: number
 ): Promise<TargetFeatureProperties | undefined> {
-  const artilleryPosition = await getArtilleryPosition(source);
+  const featureCollection = await source.getData();
+  const artilleryPosition = await getArtilleryPosition(
+    featureCollection as FeatureCollection
+  );
   let firingSolution;
   try {
     firingSolution = getArtilleryFiringSolution(artilleryPosition, {
