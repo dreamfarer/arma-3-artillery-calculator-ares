@@ -10,6 +10,14 @@ type PopupProps = {
 export default function Popup({ properties }: Readonly<PopupProps>) {
   if (properties.markerType === 'target') {
     const { azimuth, direct, indirect, fireMode } = properties;
+    if (!azimuth || !direct || !indirect || !fireMode) {
+      return (
+        <div className={styles.body}>
+          <div className={styles.title}>Target</div>
+          <div className={styles.error}>error: place artillery</div>
+        </div>
+      );
+    }
     return (
       <div className={styles.body}>
         <div className={styles.title}>Target</div>

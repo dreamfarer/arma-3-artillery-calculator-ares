@@ -11,13 +11,11 @@ export function recalculateFeatures(
       return;
     }
     try {
-      console.log(feature.properties);
       const firingSolution = getArtilleryFiringSolution(artilleryPosition, {
         x: feature.properties.x,
         y: feature.properties.y,
         z: feature.properties.z,
       } as Point3D);
-      console.log(firingSolution);
       feature.properties.azimuth = firingSolution.azimuth;
       feature.properties.direct = firingSolution.elevation.direct;
       feature.properties.indirect = firingSolution.elevation.indirect;

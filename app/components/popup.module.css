@@ -32,7 +32,7 @@
     align-self: stretch;
 }
 
-.title, .value, .key {
+.title, .value, .key, .error {
     font-family: var(--font-inter);
     font-style: normal;
     line-height: 100%;
@@ -44,7 +44,7 @@
     font-weight: 600;
 }
 
-.value, .key {
+.value, .key, .error {
     font-size: 0.75rem;
     font-weight: 400;
 }
@@ -55,4 +55,8 @@
 
 .value {
     color: var(--theme-secondary);
+}
+
+.error {
+    color: var(--theme-main);
 }
