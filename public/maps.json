@@ -1,0 +1,17 @@
+{
+  "altis": {
+    "tileSize": 256,
+    "size": [65536, 65536],
+    "devUrl": "/tiles/altis/v1/{z}/{y}/{x}.png",
+    "prodUrl": "https://cdn.armamap.app/altis/v1/{z}/{y}/{x}.png",
+    "elevationDevUrl": "/elevation/altis/v1/elevation.bin",
+    "elevationProdUrl": "https://cdn.armamap.app/altis/v1/elevation.bin",
+    "boundsImage": [23552, 23552, 41984, 41984],
+    "boundsData": [0, 0, 30720, 30720],
+    "minZoom": 1,
+    "maxZoom": 8,
+    "maxOverscaledZoom": 9,
+    "initZoom": 3,
+    "attribution": "Bohemia Interactive"
+  }
+}
