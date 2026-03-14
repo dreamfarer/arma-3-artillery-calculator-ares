@@ -12,25 +12,32 @@ interface Props {
   children: ReactNode;
 }
 
+export function generateStaticParams() {
+  return Object.keys(maps).map((map) => ({ map }));
+}
+
+export const dynamicParams = false;
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { map } = await params;
   const mapName = map.charAt(0).toUpperCase() + map.slice(1);
+
   return {
     alternates: {
-      canonical: `${map}/artillery`,
+      canonical: `/${map}/artillery`,
     },
     openGraph: {
-      url: `${map}/artillery`,
+      url: `/${map}/artillery`,
     },
-    title: `${mapName}`,
+    title: mapName,
   };
 }
 
 export default async function ArtilleryLayout({ children, params }: Props) {
-  const mapMetadata = maps;
-  const activeMap = (await params).map ?? 'altis';
+  const activeMap = (await params).map;
+
   return (
-    <MapProvider mapMetadata={mapMetadata} initialActiveMap={activeMap}>
+    <MapProvider mapMetadata={maps} initialActiveMap={activeMap}>
       <MarkerProvider>
         <MapWrapper />
         {children}
